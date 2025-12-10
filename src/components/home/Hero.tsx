@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion';
 import { Play, Info } from 'lucide-react';
 import Link from 'next/link';
+import { useSound } from '@/hooks/useSound';
 
 export function Hero() {
+  const { playClick } = useSound();
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-disco-bg">
       {/* Animated Grid Background */}
@@ -58,6 +60,7 @@ export function Hero() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={playClick}
               className="group relative px-8 py-4 bg-disco-cyan text-black font-bold text-xl rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,243,255,0.5)] hover:shadow-[0_0_50px_rgba(0,243,255,0.8)] transition-all w-full sm:w-auto min-w-[200px]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -72,6 +75,7 @@ export function Hero() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={playClick}
               className="px-8 py-4 bg-white/5 border-2 border-white/20 text-white font-bold text-xl rounded-xl backdrop-blur-sm hover:bg-white/10 transition-all w-full sm:w-auto min-w-[200px]"
             >
               <span className="flex items-center justify-center gap-2">

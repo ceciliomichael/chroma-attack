@@ -8,9 +8,10 @@ interface GameOverProps {
   score: number;
   onRestart: () => void;
   onHome?: () => void;
+  onButtonClick?: () => void;
 }
 
-export function GameOver({ score, onRestart, onHome }: GameOverProps) {
+export function GameOver({ score, onRestart, onHome, onButtonClick }: GameOverProps) {
   return (
     <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur text-white p-4">
       <motion.div
@@ -25,13 +26,17 @@ export function GameOver({ score, onRestart, onHome }: GameOverProps) {
 
         <div className="flex gap-4 justify-center">
           <button
-            onClick={onRestart}
+            onClick={() => {
+              onButtonClick?.();
+              onRestart();
+            }}
             className="p-4 rounded-full bg-white text-black hover:scale-110 transition-transform"
           >
             <RotateCcw className="w-8 h-8" />
           </button>
           <Link href="/">
             <button
+              onClick={() => onButtonClick?.()}
               className="p-4 rounded-full bg-white/10 hover:bg-white/20 hover:scale-110 transition-transform"
             >
               <Home className="w-8 h-8" />

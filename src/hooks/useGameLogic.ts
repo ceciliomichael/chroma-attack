@@ -5,7 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { GameState, GameMode, GameBox, ColorId } from '@/types/game';
 import { COLORS, COLOR_IDS, GAME_CONFIG } from '@/lib/constants';
 
-export function useGameLogic() {
+interface UseGameLogicOptions {
+  onCorrect?: () => void;
+  onFail?: () => void;
+}
+
+export function useGameLogic(options: UseGameLogicOptions = {}) {
+  const { onCorrect, onFail } = options;
   const [gameState, setGameState] = useState<GameState>({
     status: 'menu',
     mode: 'survival',
@@ -171,9 +177,10 @@ export function useGameLogic() {
 
     if (isCorrect) {
       // Success - change target color every 3-5 correct clicks
+      onCorrect?.();
       setGameState(prev => {
         const shouldChangeColor = Math.random() > 0.6; // 40% chance to change
-        const newTarget = shouldChangeColor 
+        const newTarget = shouldChangeColor
           ? COLOR_IDS[Math.floor(Math.random() * COLOR_IDS.length)]
           : prev.targetColor;
         
@@ -189,6 +196,7 @@ export function useGameLogic() {
       });
     } else {
       // Fail
+      onFail?.();
       if (gameState.mode === 'survival') {
         setGameState(prev => ({
           ...prev,

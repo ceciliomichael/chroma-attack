@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useGameLogic } from '@/hooks/useGameLogic';
+import { useSound } from '@/hooks/useSound';
 import { DiscoBackground } from '@/components/game/DiscoBackground';
 import { GameBox } from '@/components/game/GameBox';
 import { HUD } from '@/components/game/HUD';
@@ -10,12 +11,25 @@ import { GameOver } from '@/components/game/GameOver';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function GamePage() {
-  const { gameState, startGame, handleBoxClick, setGameState } = useGameLogic();
+  const { playGood, playFail, playClick, playBgm, stopBgm } = useSound();
+  const { gameState, startGame, handleBoxClick, setGameState } = useGameLogic({
+    onCorrect: playGood,
+    onFail: playFail,
+  });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Control BGM based on game status
+  useEffect(() => {
+    if (gameState.status === 'playing') {
+      playBgm();
+    } else {
+      stopBgm();
+    }
+  }, [gameState.status, playBgm, stopBgm]);
 
   if (!mounted) return null;
 
@@ -51,17 +65,19 @@ export default function GamePage() {
 
         <AnimatePresence>
           {gameState.status === 'menu' && (
-            <MainMenu 
-              onStart={startGame} 
-              highScore={gameState.highScore} 
+            <MainMenu
+              onStart={startGame}
+              highScore={gameState.highScore}
+              onButtonClick={playClick}
             />
           )}
           
           {gameState.status === 'gameover' && (
-            <GameOver 
-              score={gameState.score} 
+            <GameOver
+              score={gameState.score}
               onRestart={() => startGame(gameState.mode)}
               onHome={() => setGameState(prev => ({ ...prev, status: 'menu' }))}
+              onButtonClick={playClick}
             />
           )}
         </AnimatePresence>

@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Target, Zap, Brain, Timer } from 'lucide-react';
 import Link from 'next/link';
+import { useSound } from '@/hooks/useSound';
 
 export default function HowToPlayPage() {
+  const { playClick } = useSound();
   return (
     <main className="min-h-screen bg-disco-bg text-white overflow-y-auto py-12 px-4">
       {/* Background Effects */}
@@ -16,6 +18,7 @@ export default function HowToPlayPage() {
         <Link href="/">
           <motion.button
             whileHover={{ x: -5 }}
+            onClick={playClick}
             className="mb-8 flex items-center gap-2 text-disco-cyan hover:text-disco-pink transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -149,6 +152,7 @@ export default function HowToPlayPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={playClick}
               className="px-12 py-5 bg-disco-pink text-white font-black text-2xl rounded-xl shadow-[0_0_30px_rgba(188,19,254,0.5)] hover:shadow-[0_0_50px_rgba(188,19,254,0.8)] transition-all"
             >
               START PLAYING

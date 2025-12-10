@@ -7,9 +7,10 @@ import { Zap, Clock, Trophy } from 'lucide-react';
 interface MainMenuProps {
   onStart: (mode: GameMode) => void;
   highScore: number;
+  onButtonClick?: () => void;
 }
 
-export function MainMenu({ onStart, highScore }: MainMenuProps) {
+export function MainMenu({ onStart, highScore, onButtonClick }: MainMenuProps) {
   return (
     <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm text-white p-4">
       <motion.div
@@ -26,19 +27,25 @@ export function MainMenu({ onStart, highScore }: MainMenuProps) {
       </motion.div>
 
       <div className="flex flex-col gap-4 w-full max-w-xs">
-        <MenuButton 
+        <MenuButton
           icon={<Zap className="w-5 h-5" />}
-          title="SURVIVAL" 
+          title="SURVIVAL"
           desc="3 Lives. Endless Speed."
-          onClick={() => onStart('survival')}
+          onClick={() => {
+            onButtonClick?.();
+            onStart('survival');
+          }}
           color="border-disco-pink text-disco-pink hover:bg-disco-pink/10"
         />
         
-        <MenuButton 
+        <MenuButton
           icon={<Clock className="w-5 h-5" />}
-          title="TIME ATTACK" 
+          title="TIME ATTACK"
           desc="60 Seconds. High Score."
-          onClick={() => onStart('time')}
+          onClick={() => {
+            onButtonClick?.();
+            onStart('time');
+          }}
           color="border-disco-cyan text-disco-cyan hover:bg-disco-cyan/10"
         />
       </div>
