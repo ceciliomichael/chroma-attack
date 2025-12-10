@@ -84,11 +84,11 @@ export function useGameLogic(options: UseGameLogicOptions = {}) {
     }
 
     // Safer boundaries for mobile - boxes are centered with transform translate(-50%, -50%)
-    // So we need to keep them between 15% and 85% to prevent overflow
+    // With larger boxes (up to 128px), we need tighter bounds to prevent overflow
     const newBox: GameBox = {
       id: uuidv4(),
-      x: Math.random() * 70 + 15, // 15% to 85%
-      y: Math.random() * 50 + 30, // 30% to 80% (keep top clear for HUD, bottom safe)
+      x: Math.random() * 60 + 20, // 20% to 80%
+      y: Math.random() * 50 + 25, // 25% to 75% (keep top clear for HUD, bottom safe)
       visualColor,
       textLabel,
       isTrap: visualColor !== targetColor, // If visual color != target, DO NOT CLICK

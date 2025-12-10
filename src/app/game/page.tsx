@@ -11,10 +11,10 @@ import { GameOver } from '@/components/game/GameOver';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function GamePage() {
-  const { playGood, playFail, playClick, playBgm, stopBgm } = useSound();
+  const { playGoodMp3, playFailMp3, playClick, playBgm, stopBgm } = useSound();
   const { gameState, startGame, handleBoxClick, setGameState } = useGameLogic({
-    onCorrect: playGood,
-    onFail: playFail,
+    onCorrect: playGoodMp3,
+    onFail: playFailMp3,
   });
   const [mounted, setMounted] = useState(false);
 

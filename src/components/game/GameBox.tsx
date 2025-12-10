@@ -35,8 +35,8 @@ export function GameBox({ box, onClick }: GameBoxProps) {
         damping: 20
       }}
       className={cn(
-        "absolute w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center border-4 shadow-[0_0_15px_rgba(0,0,0,0.5)]",
-        "backdrop-blur-sm bg-black/40 font-black text-xs sm:text-sm md:text-base tracking-wider uppercase rounded-lg cursor-pointer touch-manipulation"
+        "absolute w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center border-4 shadow-[0_0_15px_rgba(0,0,0,0.5)]",
+        "backdrop-blur-sm bg-black/40 font-black text-sm sm:text-base md:text-lg tracking-wider uppercase rounded-lg cursor-pointer touch-manipulation"
       )}
       style={{
         left: `${box.x}%`,

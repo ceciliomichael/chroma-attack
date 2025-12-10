@@ -5,13 +5,18 @@ import { useRef, useCallback, useEffect } from 'react';
 export function useSound() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const bgmRef = useRef<HTMLAudioElement | null>(null);
+  const goodSoundRef = useRef<HTMLAudioElement | null>(null);
+  const failSoundRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize AudioContext on mount (client-side only)
+  // Initialize AudioContext and MP3 audio on mount (client-side only)
   useEffect(() => {
     audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
     
-    // Initialize BGM with mp3
+    // Initialize MP3 sounds
+    goodSoundRef.current = new Audio('/sounds/good.mp3');
+    failSoundRef.current = new Audio('/sounds/fail.mp3');
     bgmRef.current = new Audio('/sounds/bgm.mp3');
+    
     if (bgmRef.current) {
       bgmRef.current.loop = true;
       bgmRef.current.volume = 0.5;
@@ -23,10 +28,32 @@ export function useSound() {
         bgmRef.current.pause();
         bgmRef.current = null;
       }
+      goodSoundRef.current = null;
+      failSoundRef.current = null;
       if (audioContextRef.current) {
         audioContextRef.current.close();
       }
     };
+  }, []);
+
+  // MP3-based "good" sound for in-game correct clicks
+  const playGoodMp3 = useCallback(() => {
+    if (goodSoundRef.current) {
+      goodSoundRef.current.currentTime = 0;
+      goodSoundRef.current.play().catch(() => {
+        // Ignore autoplay restrictions
+      });
+    }
+  }, []);
+
+  // MP3-based "fail" sound for in-game wrong clicks
+  const playFailMp3 = useCallback(() => {
+    if (failSoundRef.current) {
+      failSoundRef.current.currentTime = 0;
+      failSoundRef.current.play().catch(() => {
+        // Ignore autoplay restrictions
+      });
+    }
   }, []);
 
   // Synthesized "good" sound - ascending cheerful beep
@@ -161,6 +188,8 @@ export function useSound() {
   return {
     playGood,
     playFail,
+    playGoodMp3,
+    playFailMp3,
     playClick,
     playHover,
     playBgm,
