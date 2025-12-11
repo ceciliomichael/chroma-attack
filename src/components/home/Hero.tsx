@@ -46,7 +46,7 @@ export function Hero() {
           transition={{ delay: 0.4 }}
           className="text-gray-400 text-lg sm:text-xl md:text-2xl tracking-[0.3em] uppercase mb-12"
         >
-          Don't Click The Wrong Color
+          Don't Panic It's Organic
         </motion.p>
 
         {/* CTA Buttons */}

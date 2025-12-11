@@ -22,7 +22,7 @@ export function MainMenu({ onStart, highScore, onButtonClick }: MainMenuProps) {
           CHROMA<br />PANIC
         </h1>
         <p className="text-gray-400 tracking-widest uppercase text-sm md:text-base">
-          Don't Click The Wrong Color
+          Don't Panic It's Organic
         </p>
       </motion.div>
 
